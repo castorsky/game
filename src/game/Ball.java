@@ -7,6 +7,7 @@ import java.awt.event.*;
 public class Ball {
 	private Image ball;
 	public int x, y;
+	private int ballDimension = 80;
 	public boolean active;
 	private Timer updater;
 	
@@ -27,7 +28,18 @@ public class Ball {
 		active = true;
 	}
 	
-	private void moveDown() {
-		
+	public void moveDown() {
+		if (active) {
+			y+=6;
+		}
+		if (y+ballDimension >= 470) {
+			updater.stop();
+		}
+	}
+	
+	public void draw(Graphics gr) {
+		if (active) {
+			gr.drawImage(ball, x, y, ballDimension, ballDimension, null);
+		}
 	}
 }
