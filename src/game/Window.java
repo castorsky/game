@@ -6,6 +6,7 @@ import java.awt.event.*;
 
 public class Window extends JFrame {
     private Field gameField;
+    private int difficulty;
     private class MyKey implements KeyListener {
         @Override
         public void keyPressed(KeyEvent arg0) {
@@ -27,12 +28,13 @@ public class Window extends JFrame {
 
     }
 
-    public Window() {
+    public Window(int difficulty) {
+    	this.difficulty = difficulty;
         addKeyListener(new MyKey());
         setFocusable(true);
         setBounds(0,0,800,600);
-        this.setTitle("Ball Catcher Game");
-        gameField = new Field();
+        setTitle("Ball Catcher Game");
+        gameField = new Field(difficulty);
         Container container = getContentPane();
         container.add(gameField);
         setVisible(true);
