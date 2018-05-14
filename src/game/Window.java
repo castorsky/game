@@ -10,6 +10,13 @@ public class Window extends JFrame {
         @Override
         public void keyPressed(KeyEvent arg0) {
             int key_ = arg0.getKeyCode();
+            if (key_ == 27) System.exit(0);
+            if (key_ == 37) {
+            	if (gameField.x-30 > -78) gameField.x-=30;
+            }
+            if (key_ == 39) {
+            	if (gameField.x-30 < 650) gameField.x+=30;
+            }	
         }
         @Override
         public void keyReleased(KeyEvent arg0) {
