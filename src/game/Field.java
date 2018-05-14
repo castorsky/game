@@ -8,7 +8,7 @@ import java.io.*;
 
 public class Field extends JPanel {
 	private Image background, basket;
-	private int x = 400;
+	public int x = 400;
 	
     public Field() {
         Timer timer = new Timer(50, new ActionListener() {
@@ -16,7 +16,7 @@ public class Field extends JPanel {
                         repaint();
                 }
         });
-        
+                
         try {
         	background = ImageIO.read(new File("court.jpg"));
         } catch (IOException exc) {
@@ -27,7 +27,7 @@ public class Field extends JPanel {
         } catch (IOException exc) {
         	System.out.println("Error encountered while opening file basket: "+exc.getMessage());
         }
-        
+        timer.start();
     }
     
     public void paintComponent(Graphics gr) {
