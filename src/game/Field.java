@@ -8,14 +8,22 @@ import java.io.*;
 
 public class Field extends JPanel {
 	private Image background, basket;
+	private Ball[] balls;
 	public int x = 400;
+	private int difficulty;
 	
-    public Field() {
-        Timer timer = new Timer(50, new ActionListener() {
+    public Field(int difficulty) {
+    	this.difficulty = difficulty;
+        Timer drawTimer = new Timer(50, new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                         repaint();
                 }
         });
+        Timer ballsUpdateTimer = new Timer(3000, new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                ballsUpdate();
+            }
+        }); 
                 
         try {
         	background = ImageIO.read(new File("court.jpg"));
@@ -27,12 +35,41 @@ public class Field extends JPanel {
         } catch (IOException exc) {
         	System.out.println("Error encountered while opening file basket: "+exc.getMessage());
         }
-        timer.start();
+        
+        balls = new Ball[3];
+        for (int i=0; i<3; i++) {
+            try {
+            	balls[i] = new Ball(ImageIO.read(new File("ball"+(i+1)+".png")));
+            } catch (IOException exc) {
+            	System.out.println("Error encountered while opening file ball"+(i+1)+".png: "+exc.getMessage());
+            }
+        	
+        }
+        
+        drawTimer.start();
+        ballsUpdateTimer.start();
     }
     
     public void paintComponent(Graphics gr) {
     	super.paintComponent(gr);
     	gr.drawImage(background, 0, 0, null);
     	gr.drawImage(basket, x, 400, 150, 150, null);
+    	for (int i=0; i<3; i++) {
+    		balls[i].draw(gr);
+    	}
+    }
+    
+    private void ballsUpdate() {
+    	int count = 0;
+    	for (int i=0; i<3; i++) {
+    		if (!balls[i].active) {
+    			if (count < difficulty) {
+    				balls[i].start();
+    				break;
+    			}
+    		} else {
+    			count++;
+    		}
+    	}
     }
 }

@@ -32,7 +32,7 @@ public class Ball {
 		if (active) {
 			y+=6;
 		}
-		if (y+ballDimension >= 470) {
+		if (y+ballDimension >= 480) {
 			updater.stop();
 		}
 	}
