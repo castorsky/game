@@ -12,7 +12,7 @@ public class Ball {
 	private Timer updater;
 	
 	public Ball(Image image) {
-		updater = new Timer(500, new ActionListener() {
+		updater = new Timer(200, new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				moveDown();
 			}

@@ -7,19 +7,20 @@ import java.awt.event.*;
 import java.io.*;
 
 public class Field extends JPanel {
-	private Image background, basket;
+	private Image background, basket, gameover;
 	private Ball[] balls;
 	public int x = 400;
 	private int difficulty;
+	public Timer drawTimer, ballsUpdateTimer;
 	
     public Field(int difficulty) {
     	this.difficulty = difficulty;
-        Timer drawTimer = new Timer(50, new ActionListener() {
+        drawTimer = new Timer(50, new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                         repaint();
                 }
         });
-        Timer ballsUpdateTimer = new Timer(3000, new ActionListener() {
+        ballsUpdateTimer = new Timer(3000, new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 ballsUpdate();
             }
@@ -34,6 +35,11 @@ public class Field extends JPanel {
         	basket = ImageIO.read(new File("basket.png"));
         } catch (IOException exc) {
         	System.out.println("Error encountered while opening file basket: "+exc.getMessage());
+        }
+        try {
+        	gameover = ImageIO.read(new File("S2e16_Game_over.png"));
+        } catch (IOException exc) {
+        	System.out.println("Error encountered while opening file gameover: "+exc.getMessage());
         }
         
         balls = new Ball[3];
@@ -56,6 +62,17 @@ public class Field extends JPanel {
     	gr.drawImage(basket, x, 400, 150, 150, null);
     	for (int i=0; i<3; i++) {
     		balls[i].draw(gr);
+    		if ((balls[i].active == true) && 
+    				(balls[i].y+80>479)) {
+    			if (Math.abs(balls[i].x-x)>75) {
+    				gr.drawImage(gameover, 0,0,800,600,null);
+    				drawTimer.stop();
+    				ballsUpdateTimer.stop();
+    				break;
+    			} else {
+    				balls[i].active = false;
+    			}
+    		}
     	}
     }
     
