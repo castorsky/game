@@ -7,11 +7,12 @@ import java.awt.event.*;
 public class Ball {
 	private Image ball;
 	public int x, y;
+	public int stepDown = 5;
 	private int ballDimension = 80;
 	public boolean active;
 	private Timer updater;
 	
-	public Ball(Image image) {
+	public Ball(Image image, int fallingSpeed) {
 		updater = new Timer(200, new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				moveDown();
@@ -24,15 +25,15 @@ public class Ball {
 	public void start() {
 		updater.start();
 		y = 0;
-		x = (int)(Math.random()*700);
+		x = (int)(Math.random()*900);
 		active = true;
 	}
 	
 	public void moveDown() {
 		if (active) {
-			y+=6;
+			y+=stepDown;
 		}
-		if (y+ballDimension >= 480) {
+		if (y+ballDimension >= 648) {
 			updater.stop();
 		}
 	}

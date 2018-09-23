@@ -6,7 +6,10 @@ import java.awt.event.*;
 
 public class Window extends JFrame {
     private Field gameField;
+    // Уровень сложности
     private int difficulty;
+    // Размер окна и картинки поля
+    private int dimX = 1024, dimY = 768;
     private class MyKey implements KeyListener {
         @Override
         public void keyPressed(KeyEvent arg0) {
@@ -16,7 +19,7 @@ public class Window extends JFrame {
             	if (gameField.x-30 > -78) gameField.x-=30;
             }
             if (key_ == 39) {
-            	if (gameField.x-30 < 650) gameField.x+=30;
+            	if (gameField.x-30 < (dimX-150)) gameField.x+=30;
             }	
         }
         @Override
@@ -32,9 +35,9 @@ public class Window extends JFrame {
     	this.difficulty = difficulty;
         addKeyListener(new MyKey());
         setFocusable(true);
-        setBounds(0,0,800,600);
+        setBounds(0,0, dimX, dimY);
         setTitle("Ball Catcher Game");
-        gameField = new Field(difficulty);
+        gameField = new Field(difficulty, dimX, dimY);
         Container container = getContentPane();
         container.add(gameField);
         setVisible(true);
